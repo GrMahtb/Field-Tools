@@ -3,7 +3,6 @@ window.APPS = [
     id: "schwingungsmesser",
     name: "Schwingungsmesser",
     shortName: "Vibration",
-    icon: "📳",
     url: "https://grmahtb.github.io/Schwingungsmesser/",
     mode: "iframe"
   },
@@ -11,15 +10,13 @@ window.APPS = [
     id: "rammpfahl",
     name: "Rammpfahl",
     shortName: "Rammpfahl",
-    icon: "🔩",
     url: "https://grmahtb.github.io/Rammpfahl/",
     mode: "iframe"
   },
   {
     id: "pumpversuch",
     name: "Pumpversuch",
-    shortName: "Pumpversuch",
-    icon: "💧",
+    shortName: "Pump",
     url: "https://grmahtb.github.io/Pumpversuch/",
     mode: "iframe"
   },
@@ -27,7 +24,6 @@ window.APPS = [
     id: "bohrprotokoll",
     name: "Bohrprotokoll",
     shortName: "Bohrprot.",
-    icon: "📋",
     url: "https://grmahtb.github.io/Bohrprotokoll/",
     mode: "iframe"
   },
@@ -35,7 +31,6 @@ window.APPS = [
     id: "bohrkernaufnahme",
     name: "Bohrkernaufnahme",
     shortName: "Bohrkern",
-    icon: "🪨",
     url: "https://grmahtb.github.io/Bohrkernaufnahme/",
     mode: "iframe"
   }
