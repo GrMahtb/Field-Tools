@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>HTB Field Tools</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#111111">
+  <style>
+    /* ═══════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #111111;
+      --surface:      #1e1e1e;
+      --surface-2:    #2c2c2c;
+      --primary:      #ffed00;
+      --primary-dark: #ccbe00;
+      --text-main:    #ffffff;
+      --text-muted:   #aaaaaa;
+      --danger:       #ff5252;
+      --border:       #333333;
+      --radius:       10px;
+      --nav-h:        64px;
+      --tab-h:        56px;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      overflow: hidden;
+    }
+
+    /* ═══════════════════════════════════════════
+       TOP HEADER
+    ═══════════════════════════════════════════ */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: var(--surface);
+      border-bottom: 2px solid var(--primary);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 14px;
+      z-index: 200;
+    }
+
+    header .logo {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+
+    header .logo svg { width: 100%; height: 100%; }
+
+    header h1 {
+      font-size: 1.1rem;
+      color: var(--primary);
+      letter-spacing: 0.03em;
+      flex: 1;
+    }
+
+    header .version {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+
+    /* ═══════════════════════════════════════════
+       DASHBOARD – HOME SCREEN
+    ═══════════════════════════════════════════ */
+    #dashboard {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0; bottom: 0;
+      overflow-y: auto;
+      padding: 24px 16px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      background: var(--bg);
+      z-index: 100;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    #dashboard.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.97);
+    }
+
+    .dashboard-title {
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .dashboard-title h2 {
+      font-size: 1.4rem;
+      color: var(--text-main);
+    }
+
+    .dashboard-title p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* App Cards Grid */
+    .app-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    @media (min-width: 520px) {
+      .app-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .app-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      user-select: none;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .app-card:hover, .app-card:active {
+      border-color: var(--primary);
+      background: var(--surface-2);
+      transform: translateY(-2px);
+    }
+
+    .app-card .icon {
+      font-size: 2.2rem;
+      line-height: 1;
+    }
+
+    .app-card .label {
+      font-size: 0.82rem;
+      font-weight: bold;
+      text-align: center;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .app-card .sublabel {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* ═══════════════════════════════════════════
+       IFRAME CONTAINER
+    ═══════════════════════════════════════════ */
+    #frame-container {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0; bottom: 0;
+      z-index: 90;
+      display: none;
+    }
+
+    #frame-container.active {
+      display: block;
+    }
+
+    #app-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: var(--bg);
+    }
+
+    /* Loading overlay */
+    #frame-loader {
+      position: absolute;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 10;
+      transition: opacity 0.3s;
+    }
+
+    #frame-loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    #frame-loader p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       BACK BAR (shown when app is open)
+    ═══════════════════════════════════════════ */
+    #back-bar {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    #back-bar.active {
+      display: flex;
+    }
+
+    #back-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-family: inherit;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: border-color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    #back-btn:hover {
+      border-color: var(--primary);
+      background: var(--border);
+    }
+
+    #active-app-name {
+      font-size: 0.95rem;
+      color: var(--primary);
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #header-logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+    }
+
+    #header-logo-area.hidden {
+      display: none;
+    }
+
+    /* ═══════════════════════════════════════════
+       OPEN IN NEW TAB BUTTON
+    ═══════════════════════════════════════════ */
+    #open-external {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-family: inherit;
+      display: none;
+      align-items: center;
+      gap: 4px;
+      transition: border-color 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    #open-external.active {
+      display: flex;
+    }
+
+    #open-external:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* ═══════════════════════════════════════════
+       BOTTOM TAB BAR
+    ═══════════════════════════════════════════ */
+    #tab-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: var(--tab-h);
+      background: var(--surface);
+      border-top: 2px solid var(--primary);
+      display: flex;
+      z-index: 200;
+    }
+
+    .tab-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.6rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      transition: color 0.2s, background 0.2s;
+      padding: 4px 2px;
+      position: relative;
+    }
+
+    .tab-btn .tab-icon {
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    .tab-btn:hover {
+      background: var(--surface-2);
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 20%; right: 20%;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 0 0 3px 3px;
+    }
+
+    /* ═══════════════════════════════════════════
+       MAIN CONTENT AREA (above tab bar)
+    ═══════════════════════════════════════════ */
+    #dashboard,
+    #frame-container {
+      bottom: var(--tab-h);
+    }
+
+    /* Safe area for notched phones */
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      #tab-bar {
+        padding-bottom: env(safe-area-inset-bottom);
+        height: calc(var(--tab-h) + env(safe-area-inset-bottom));
+      }
+      #dashboard,
+      #frame-container {
+        bottom: calc(var(--tab-h) + env(safe-area-inset-bottom));
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ TOP HEADER ═══ -->
+<header>
+  <!-- Logo area (home state) -->
+  <div id="header-logo-area">
+    <div class="logo">
+      <!-- HTB Logo inline SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <rect width="512" height="512" rx="80" fill="#111111"/>
+        <g transform="translate(256,256) scale(0.72) translate(-318.9,-248)">
+          <path fill="#ffed00" d="M531.5,177.12H148.73l43.08-28.73c6.57-4.38,14.29-6.72,22.18-6.72h285.8s-140.7-93.84-140.7-93.84c-.7-.48-1.44-.95-2.15-1.42-21.73-14.64-54.36-14.64-76.09,0-.72.48-1.44.94-2.15,1.42L66.6,189.29h0c-4.68,3.2-8.98,6.93-12.8,11.12-41.01,45.63-8.95,118.29,52.5,118.53h382.77l-43.08,28.73c-6.57,4.38-14.29,6.72-22.19,6.72H138.01s140.71,93.84,140.71,93.84c.7.49,1.44.95,2.15,1.43,21.73,14.64,54.36,14.64,76.09,0,.72-.48,1.44-.94,2.14-1.42l212.1-141.45h0c4.69-3.21,9.01-6.96,12.84-11.16,11.73-12.89,18.35-30.15,18.33-47.58,0-39.16-31.73-70.9-70.87-70.9Z"/>
+        </g>
+      </svg>
+    </div>
+    <h1>HTB Field Tools</h1>
+    <span class="version">v1.0</span>
+  </div>
+
+  <!-- Back bar (app state) -->
+  <div id="back-bar">
+    <button id="back-btn" onclick="goHome()">← Zurück</button>
+    <span id="active-app-name"></span>
+  </div>
+  <button id="open-external" onclick="openExternal()">↗ Neu öffnen</button>
+</header>
+
+<!-- ═══ DASHBOARD (HOME) ═══ -->
+<div id="dashboard">
+  <div class="dashboard-title">
+    <h2>Field Tools</h2>
+    <p>Alle Werkzeuge auf einen Blick</p>
+  </div>
+
+  <div class="app-grid">
+    <div class="app-card" onclick="openApp('schwingung')">
+      <div class="icon">📳</div>
+      <div class="label">Schwingungs&shy;messer</div>
+      <div class="sublabel">ÖNORM S 9020</div>
+    </div>
+    <div class="app-card" onclick="openApp('rammpfahl')">
+      <div class="icon">🔩</div>
+      <div class="label">Ramm&shy;pfahl</div>
+      <div class="sublabel">Protokoll & Rd</div>
+    </div>
+    <div class="app-card" onclick="openApp('pumpversuch')">
+      <div class="icon">💧</div>
+      <div class="label">Pump&shy;versuch</div>
+      <div class="sublabel">HTB-Vorlage</div>
+    </div>
+    <div class="app-card" onclick="openApp('bohrprotokoll')">
+      <div class="icon">📋</div>
+      <div class="label">Bohr&shy;protokoll</div>
+      <div class="sublabel">Nagel & Verpressung</div>
+    </div>
+    <div class="app-card" onclick="openApp('bohrkern')">
+      <div class="icon">🪨</div>
+      <div class="label">Bohrkern&shy;aufnahme</div>
+      <div class="sublabel">ISO 14688</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ APP IFRAME CONTAINER ═══ -->
+<div id="frame-container">
+  <div id="frame-loader">
+    <div class="spinner"></div>
+    <p id="loader-text">Wird geladen…</p>
+  </div>
+  <iframe
+    id="app-frame"
+    src=""
+    title="App"
+    allow="accelerometer; gyroscope; vibrate; clipboard-write"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<!-- ═══ BOTTOM TAB BAR ═══ -->
+<div id="tab-bar">
+  <button class="tab-btn active" id="tab-home" onclick="goHome()">
+    <span class="tab-icon">🏠</span>
+    <span>Home</span>
+  </button>
+  <button class="tab-btn" id="tab-schwingung" onclick="openApp('schwingung')">
+    <span class="tab-icon">📳</span>
+    <span>Vibration</span>
+  </button>
+  <button class="tab-btn" id="tab-rammpfahl" onclick="openApp('rammpfahl')">
+    <span class="tab-icon">🔩</span>
+    <span>Rammpfahl</span>
+  </button>
+  <button class="tab-btn" id="tab-pumpversuch" onclick="openApp('pumpversuch')">
+    <span class="tab-icon">💧</span>
+    <span>Pump</span>
+  </button>
+  <button class="tab-btn" id="tab-bohrprotokoll" onclick="openApp('bohrprotokoll')">
+    <span class="tab-icon">📋</span>
+    <span>Bohrprot.</span>
+  </button>
+  <button class="tab-btn" id="tab-bohrkern" onclick="openApp('bohrkern')">
+    <span class="tab-icon">🪨</span>
+    <span>Bohrkern</span>
+  </button>
+</div>
+
+<script>
+  /* ═══════════════════════════════════════════
+     APP REGISTRY
+  ═══════════════════════════════════════════ */
+  const APPS = {
+    schwingung:    { name: 'Schwingungsmesser',  url: 'https://grmahtb.github.io/Schwingungsmesser/' },
+    rammpfahl:     { name: 'Rammpfahl-Protokoll',url: 'https://grmahtb.github.io/Rammpfahl/' },
+    pumpversuch:   { name: 'Pumpversuch',        url: 'https://grmahtb.github.io/Pumpversuch/' },
+    bohrprotokoll: { name: 'Bohrprotokoll',      url: 'https://grmahtb.github.io/Bohrprotokoll/' },
+    bohrkern:      { name: 'Bohrkernaufnahme',   url: 'https://grmahtb.github.io/Bohrkernaufnahme/' }
+  };
+
+  let currentApp = null;
+  let currentUrl = null;
+
+  /* ═══════════════════════════════════════════
+     NAVIGATION
+  ═══════════════════════════════════════════ */
+  function openApp(key) {
+    const app = APPS[key];
+    if (!app) return;
+
+    currentApp = key;
+    currentUrl = app.url;
+
+    // Update UI state
+    document.getElementById('dashboard').classList.add('hidden');
+    document.getElementById('frame-container').classList.add('active');
+
+    // Header switch
+    document.getElementById('header-logo-area').classList.add('hidden');
+    document.getElementById('back-bar').classList.add('active');
+    document.getElementById('open-external').classList.add('active');
+    document.getElementById('active-app-name').textContent = app.name;
+
+    // Show loader
+    const loader = document.getElementById('frame-loader');
+    loader.classList.remove('hidden');
+    document.getElementById('loader-text').textContent = app.name + ' wird geladen…';
+
+    // Load iframe
+    const frame = document.getElementById('app-frame');
+    frame.src = app.url;
+
+    // Tab highlight
+    setActiveTab(key);
+  }
+
+  function goHome() {
+    currentApp = null;
+    currentUrl = null;
+
+    document.getElementById('dashboard').classList.remove('hidden');
+    document.getElementById('frame-container').classList.remove('active');
+
+    document.getElementById('header-logo-area').classList.remove('hidden');
+    document.getElementById('back-bar').classList.remove('active');
+    document.getElementById('open-external').classList.remove('active');
+
+    // Clear frame to stop background activity
+    document.getElementById('app-frame').src = '';
+
+    setActiveTab('home');
+  }
+
+  function openExternal() {
+    if (currentUrl) window.open(currentUrl, '_blank');
+  }
+
+  function setActiveTab(key) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    const tab = document.getElementById('tab-' + key);
+    if (tab) tab.classList.add('active');
+  }
+
+  /* ═══════════════════════════════════════════
+     IFRAME LOAD HANDLER
+  ═══════════════════════════════════════════ */
+  document.getElementById('app-frame').addEventListener('load', function () {
+    const loader = document.getElementById('frame-loader');
+    // Small delay so the app can render
+    setTimeout(() => loader.classList.add('hidden'), 400);
+  });
+
+  /* ═══════════════════════════════════════════
+     KEYBOARD SHORTCUT – Escape = Home
+  ═══════════════════════════════════════════ */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && currentApp) goHome();
+  });
+</script>
+</body>
+</html>
