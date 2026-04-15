@@ -1,4 +1,4 @@
-const CACHE_NAME = "htb-field-tools-v3";
+const CACHE_NAME = "htb-field-tools-v4";
 const ASSETS = [
   "./",
   "./index.html",
