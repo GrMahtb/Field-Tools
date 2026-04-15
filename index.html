@@ -25,9 +25,10 @@
       --text: #ffffff;
       --muted: #aaaaaa;
       --border: #333333;
+      --danger: #ff5252;
       --radius: 12px;
       --header-h: 72px;
-      --tabbar-h: 72px;
+      --footer-h: 82px;
     }
 
     html, body {
@@ -80,7 +81,6 @@
       background: #111111;
       border-radius: 10px;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.04);
     }
 
     .logo-container img {
@@ -166,12 +166,10 @@
       background: #353535;
     }
 
-    #installBtn,
     #openExternalBtn {
       display: none;
     }
 
-    #installBtn.active,
     #openExternalBtn.active {
       display: inline-flex;
     }
@@ -182,7 +180,7 @@
       top: var(--header-h);
       left: 0;
       right: 0;
-      bottom: var(--tabbar-h);
+      bottom: var(--footer-h);
       background: var(--bg);
     }
 
@@ -234,7 +232,7 @@
       color: var(--text);
     }
 
-    /* ICONS */
+    /* APP ICONS */
     .icon-shell {
       width: 76px;
       height: 76px;
@@ -259,25 +257,11 @@
       pointer-events: none;
     }
 
-    .icon-shell.small {
-      width: 32px;
-      height: 32px;
-      border-radius: 9px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.10),
-        0 3px 8px rgba(0,0,0,.22);
-    }
-
     .icon-shell svg {
       width: 44px;
       height: 44px;
       position: relative;
       z-index: 1;
-    }
-
-    .icon-shell.small svg {
-      width: 18px;
-      height: 18px;
     }
 
     /* FRAMES */
@@ -347,68 +331,79 @@
       font-size: 0.9rem;
     }
 
-    /* TAB BAR */
-    #tabbar {
+    /* FOOTER INSTALL BAR
+       orientiert sich an der fixen actions-bar deiner bestehenden App */
+    .install-bar {
       position: fixed;
       left: 0;
       right: 0;
       bottom: 0;
-      height: var(--tabbar-h);
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(76px, 1fr);
       background: var(--surface);
+      padding: 12px 16px;
       border-top: 2px solid var(--primary);
       z-index: 300;
-      overflow-x: auto;
-    }
-
-    .tab {
-      appearance: none;
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      font: inherit;
-      font-size: 0.65rem;
-      font-weight: 800;
-      padding: 7px 4px 6px;
       display: flex;
       flex-direction: column;
+      gap: 8px;
       align-items: center;
       justify-content: center;
-      gap: 5px;
-      min-width: 76px;
-      position: relative;
+      min-height: var(--footer-h);
     }
 
-    .tab:hover {
+    .install-bar.hidden {
+      display: none;
+    }
+
+    .btn {
       background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.95rem;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      min-width: 240px;
+      max-width: 420px;
+      width: 100%;
     }
 
-    .tab.active {
-      color: var(--primary);
+    .btn:hover {
+      background: var(--border);
     }
 
-    .tab.active::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 18%;
-      right: 18%;
-      height: 3px;
+    .btn-primary {
       background: var(--primary);
-      border-radius: 0 0 4px 4px;
+      color: #000000;
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+
+    .install-note {
+      font-size: 0.76rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.35;
+      max-width: 520px;
     }
 
     @supports (padding-bottom: env(safe-area-inset-bottom)) {
-      #tabbar {
-        height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
-        padding-bottom: env(safe-area-inset-bottom);
+      .install-bar {
+        padding-bottom: calc(12px + env(safe-area-inset-bottom));
+        min-height: calc(var(--footer-h) + env(safe-area-inset-bottom));
       }
 
       .main-area {
-        bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+        bottom: calc(var(--footer-h) + env(safe-area-inset-bottom));
       }
     }
   </style>
@@ -421,7 +416,7 @@
         <img src="./assets/icon.svg" alt="HTB Logo" width="44" height="44">
       </div>
       <div class="brand-text">
-        <h1>HTB Field Tools</h1>
+        <h1>Field Tools</h1>
         <p>HTB Baugesellschaft m.b.H.</p>
       </div>
     </div>
@@ -432,7 +427,6 @@
     </div>
 
     <div class="top-actions">
-      <button class="btn-head" id="installBtn" type="button">⬇ Installieren</button>
       <button class="btn-head" id="openExternalBtn" type="button" onclick="openCurrentExternally()">↗ Neu öffnen</button>
     </div>
   </header>
@@ -451,7 +445,10 @@
     </section>
   </main>
 
-  <nav id="tabbar"></nav>
+  <footer class="install-bar" id="installBar">
+    <button class="btn btn-primary" id="installBtnFooter" type="button">⬇ Installieren</button>
+    <div class="install-note" id="installNote"></div>
+  </footer>
 
   <script src="./apps.js"></script>
   <script>
@@ -463,7 +460,6 @@
 
     const dashboard = document.getElementById("dashboard");
     const appGrid = document.getElementById("appGrid");
-    const tabbar = document.getElementById("tabbar");
     const frameContainer = document.getElementById("frameContainer");
     const frameStage = document.getElementById("frameStage");
     const loader = document.getElementById("loader");
@@ -472,11 +468,19 @@
     const brandArea = document.getElementById("brandArea");
     const appBar = document.getElementById("appBar");
     const activeAppName = document.getElementById("activeAppName");
-    const installBtn = document.getElementById("installBtn");
     const openExternalBtn = document.getElementById("openExternalBtn");
+
+    const installBar = document.getElementById("installBar");
+    const installBtnFooter = document.getElementById("installBtnFooter");
+    const installNote = document.getElementById("installNote");
 
     function getAppById(id) {
       return (window.APPS || []).find(app => app.id === id);
+    }
+
+    function isIOS() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent)
+        || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
     }
 
     function isAndroid() {
@@ -484,7 +488,8 @@
     }
 
     function isStandalone() {
-      return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+      return window.matchMedia("(display-mode: standalone)").matches
+        || window.navigator.standalone === true;
     }
 
     function showLoader(text = "App wird geladen …") {
@@ -496,22 +501,37 @@
       loader.classList.remove("active");
     }
 
-    function updateTopButtons() {
-      const showInstall = !isStandalone() && (isAndroid() || !!deferredPrompt);
-      installBtn.classList.toggle("active", showInstall);
-      openExternalBtn.classList.toggle("active", !!state.currentAppId);
-    }
+    function updateInstallUI() {
+      if (isStandalone()) {
+        installBar.classList.add("hidden");
+        return;
+      }
 
-    function getHomeIconMarkup(size = "small") {
-      return `
-        <div class="icon-shell ${size === "small" ? "small" : ""}" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 30L32 14L52 30" stroke="#FFED00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M18 28V48H46V28" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M28 48V36H36V48" stroke="#FFED00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      `;
+      installBar.classList.remove("hidden");
+
+      if (isIOS()) {
+        installBtnFooter.style.display = "inline-flex";
+        installBtnFooter.textContent = "⬇ Installieren";
+        installNote.textContent = "iPhone / iPad: Teilen → Zum Home-Bildschirm";
+        return;
+      }
+
+      if (deferredPrompt) {
+        installBtnFooter.style.display = "inline-flex";
+        installBtnFooter.textContent = "⬇ Installieren";
+        installNote.textContent = "App kann direkt installiert werden.";
+        return;
+      }
+
+      if (isAndroid()) {
+        installBtnFooter.style.display = "inline-flex";
+        installBtnFooter.textContent = "⬇ Installieren";
+        installNote.textContent = "Falls kein Dialog erscheint: Chrome-Menü ⋮ → App installieren";
+        return;
+      }
+
+      installBtnFooter.style.display = "none";
+      installNote.textContent = "";
     }
 
     function getAppIconSVG(id) {
@@ -568,9 +588,9 @@
       }
     }
 
-    function getAppIconMarkup(id, size = "large") {
+    function getAppIconMarkup(id) {
       return `
-        <div class="icon-shell ${size === "small" ? "small" : ""}" aria-hidden="true">
+        <div class="icon-shell" aria-hidden="true">
           ${getAppIconSVG(id)}
         </div>
       `;
@@ -579,34 +599,10 @@
     function renderDashboard() {
       appGrid.innerHTML = (window.APPS || []).map(app => `
         <button class="card" onclick="openApp('${app.id}')" aria-label="${app.name}">
-          ${getAppIconMarkup(app.id, "large")}
+          ${getAppIconMarkup(app.id)}
           <div class="card-title">${app.name}</div>
         </button>
       `).join("");
-    }
-
-    function renderTabs() {
-      const homeTab = `
-        <button class="tab active" data-tab="home" onclick="goHome()">
-          ${getHomeIconMarkup("small")}
-          <span>Home</span>
-        </button>
-      `;
-
-      const appTabs = (window.APPS || []).map(app => `
-        <button class="tab" data-tab="${app.id}" onclick="openApp('${app.id}')">
-          ${getAppIconMarkup(app.id, "small")}
-          <span>${app.shortName || app.name}</span>
-        </button>
-      `).join("");
-
-      tabbar.innerHTML = homeTab + appTabs;
-    }
-
-    function setActiveTab(id) {
-      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-      const target = document.querySelector(`.tab[data-tab="${id}"]`);
-      if (target) target.classList.add("active");
     }
 
     function getOrCreateFrame(app) {
@@ -643,8 +639,7 @@
       activeAppName.textContent = app.name;
       dashboard.style.display = "none";
       frameContainer.classList.add("active");
-      setActiveTab(app.id);
-      updateTopButtons();
+      openExternalBtn.classList.add("active");
     }
 
     function setHomeUi() {
@@ -653,8 +648,7 @@
       activeAppName.textContent = "";
       dashboard.style.display = "block";
       frameContainer.classList.remove("active");
-      setActiveTab("home");
-      updateTopButtons();
+      openExternalBtn.classList.remove("active");
     }
 
     function openApp(id, updateHash = true) {
@@ -715,40 +709,45 @@
       goHome(false);
     }
 
-    installBtn.addEventListener("click", async () => {
+    installBtnFooter.addEventListener("click", async () => {
+      if (isIOS()) {
+        alert('iPhone / iPad:\n\n1. Unten oder oben auf "Teilen"\n2. "Zum Home-Bildschirm"\n3. "Hinzufügen"');
+        return;
+      }
+
       if (deferredPrompt) {
         deferredPrompt.prompt();
         try {
           await deferredPrompt.userChoice;
         } catch (e) {}
         deferredPrompt = null;
-        updateTopButtons();
+        updateInstallUI();
         return;
       }
 
       if (isAndroid()) {
-        alert('Android / Chrome: Menü ⋮ → "App installieren"');
-      } else {
-        alert("Diese Funktion ist primär für Android/Chrome gedacht.");
+        alert('Android / Chrome:\n\nWenn kein direkter Dialog erscheint:\nMenü ⋮ → "App installieren"');
+        return;
       }
+
+      alert("Installation in diesem Browser derzeit nicht direkt verfügbar.");
     });
 
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      updateTopButtons();
+      updateInstallUI();
     });
 
     window.addEventListener("appinstalled", () => {
       deferredPrompt = null;
-      updateTopButtons();
+      updateInstallUI();
     });
 
     document.addEventListener("DOMContentLoaded", () => {
       renderDashboard();
-      renderTabs();
       applyRouteFromHash();
-      updateTopButtons();
+      updateInstallUI();
     });
 
     window.addEventListener("hashchange", applyRouteFromHash);
