@@ -35,95 +35,79 @@
     }
 
     .topbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: var(--header-h);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 14px;
-      background: var(--surface);
-      border-bottom: 2px solid var(--primary);
-      z-index: 300;
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border-bottom: 2px solid var(--primary);
+  z-index: 300;
+}
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-      flex: 1;
-    }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
 
-    .brand.hidden {
-      display: none;
-    }
+.brand.hidden {
+  display: none;
+}
 
-    .logo-badge {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      background: #f5f5f0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 7px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.75),
-        0 4px 12px rgba(0,0,0,.22);
-      flex-shrink: 0;
-    }
+.logo-container {
+  width: 44px;
+  height: 44px;
+  margin-right: 2px;
+  flex-shrink: 0;
+  background: #111111;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-    .logo-badge img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
+.logo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 10px;
+}
 
-    .brand-text {
-      min-width: 0;
-      line-height: 1.1;
-    }
+.brand-text {
+  min-width: 0;
+  line-height: 1.1;
+}
 
-    .brand-text h1 {
-      margin: 0;
-      font-size: 1.02rem;
-      color: var(--primary);
-      letter-spacing: 0.02em;
-      font-weight: 800;
-    }
+.brand-text h1 {
+  margin: 0;
+  font-size: 1.02rem;
+  color: var(--primary);
+  letter-spacing: 0.02em;
+  font-weight: 800;
+}
 
-    .brand-text p {
-      margin: 4px 0 0;
-      font-size: 0.74rem;
-      color: var(--text);
-      opacity: .86;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+.brand-text p {
+  margin: 4px 0 0;
+  font-size: 0.74rem;
+  color: var(--text);
+  opacity: .86;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-    .appbar {
-      display: none;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-      flex: 1;
-    }
-
-    .appbar.active {
-      display: flex;
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
-    }
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
 
     .btn-head {
       appearance: none;
@@ -398,26 +382,26 @@
 <body>
 
   <header class="topbar">
-    <div class="brand" id="brandArea">
-      <div class="logo-badge" aria-hidden="true">
-        <img src="./assets/logo-htb.svg" alt="HTB Logo">
-      </div>
-      <div class="brand-text">
-        <h1>HTB Field Tools</h1>
-        <p>HTB Baugesellschaft m.b.H.</p>
-      </div>
+  <div class="brand" id="brandArea">
+    <div class="logo-container" aria-hidden="true">
+      <img src="./assets/icon.svg" alt="HTB Logo" width="44" height="44">
     </div>
+    <div class="brand-text">
+      <h1>Field Tools</h1>
+      <p>HTB Baugesellschaft m.b.H.</p>
+    </div>
+  </div>
 
-    <div class="appbar" id="appBar">
-      <button class="btn-head" onclick="goHome()">← Zurück</button>
-      <div id="activeAppName"></div>
-    </div>
+  <div class="appbar" id="appBar">
+    <button class="btn-head" onclick="goHome()">← Zurück</button>
+    <div id="activeAppName"></div>
+  </div>
 
-    <div class="top-actions">
-      <button class="btn-head" id="installBtn" type="button">⬇ Installieren</button>
-      <button class="btn-head" id="openExternalBtn" type="button" onclick="openCurrentExternally()">↗ Neu öffnen</button>
-    </div>
-  </header>
+  <div class="top-actions">
+    <button class="btn-head" id="installBtn" type="button">⬇ Installieren</button>
+    <button class="btn-head" id="openExternalBtn" type="button" onclick="openCurrentExternally()">↗ Neu öffnen</button>
+  </div>
+</header>
 
   <main class="main-area">
     <section id="dashboard">
