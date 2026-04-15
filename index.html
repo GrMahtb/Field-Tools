@@ -12,9 +12,7 @@
   <link rel="manifest" href="./manifest.webmanifest" />
 
   <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { box-sizing: border-box; }
 
     :root {
       --bg: #111111;
@@ -41,11 +39,8 @@
       overflow: hidden;
     }
 
-    body {
-      background: var(--bg);
-    }
+    body { background: var(--bg); }
 
-    /* HEADER */
     .topbar {
       position: fixed;
       top: 0;
@@ -69,9 +64,7 @@
       flex: 1;
     }
 
-    .brand.hidden {
-      display: none;
-    }
+    .brand.hidden { display: none; }
 
     .logo-container {
       width: 44px;
@@ -122,9 +115,7 @@
       flex: 1;
     }
 
-    .appbar.active {
-      display: flex;
-    }
+    .appbar.active { display: flex; }
 
     #activeAppName {
       min-width: 0;
@@ -174,7 +165,6 @@
       display: inline-flex;
     }
 
-    /* MAIN */
     .main-area {
       position: fixed;
       top: var(--header-h);
@@ -184,7 +174,6 @@
       background: var(--bg);
     }
 
-    /* DASHBOARD */
     #dashboard {
       position: absolute;
       inset: 0;
@@ -196,8 +185,14 @@
       max-width: 960px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
+    }
+
+    @media (min-width: 720px) {
+      .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
 
     .card {
@@ -232,7 +227,6 @@
       color: var(--text);
     }
 
-    /* APP ICONS */
     .icon-shell {
       width: 76px;
       height: 76px;
@@ -264,7 +258,6 @@
       z-index: 1;
     }
 
-    /* FRAMES */
     #frameContainer {
       position: absolute;
       inset: 0;
@@ -272,9 +265,7 @@
       background: var(--bg);
     }
 
-    #frameContainer.active {
-      display: block;
-    }
+    #frameContainer.active { display: block; }
 
     #frameStage {
       position: absolute;
@@ -291,11 +282,8 @@
       display: none;
     }
 
-    .app-frame.active {
-      display: block;
-    }
+    .app-frame.active { display: block; }
 
-    /* LOADER */
     #loader {
       position: absolute;
       inset: 0;
@@ -309,9 +297,7 @@
       backdrop-filter: blur(2px);
     }
 
-    #loader.active {
-      display: flex;
-    }
+    #loader.active { display: flex; }
 
     .spinner {
       width: 42px;
@@ -331,8 +317,6 @@
       font-size: 0.9rem;
     }
 
-    /* FOOTER INSTALL BAR
-       orientiert sich an der fixen actions-bar deiner bestehenden App */
     .install-bar {
       position: fixed;
       left: 0;
@@ -350,9 +334,7 @@
       min-height: var(--footer-h);
     }
 
-    .install-bar.hidden {
-      display: none;
-    }
+    .install-bar.hidden { display: none; }
 
     .btn {
       background: var(--surface-2);
@@ -416,7 +398,7 @@
         <img src="./assets/icon.svg" alt="HTB Logo" width="44" height="44">
       </div>
       <div class="brand-text">
-        <h1>Field Tools</h1>
+        <h1>HTB Field Tools</h1>
         <p>HTB Baugesellschaft m.b.H.</p>
       </div>
     </div>
