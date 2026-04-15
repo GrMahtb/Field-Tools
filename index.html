@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>HTB Anwendungen</title>
+  <title>HTB Field Tools</title>
   <meta name="theme-color" content="#111111" />
   <link rel="manifest" href="./manifest.webmanifest" />
 
@@ -19,9 +19,9 @@
       --text: #ffffff;
       --muted: #aaaaaa;
       --border: #333333;
-      --radius: 12px;
-      --header-h: 64px;
-      --tabbar-h: 64px;
+      --radius: 14px;
+      --header-h: 72px;
+      --tabbar-h: 72px;
     }
 
     html, body {
@@ -43,7 +43,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 0 14px;
+      padding: 10px 14px;
       background: var(--surface);
       border-bottom: 2px solid var(--primary);
       z-index: 300;
@@ -61,27 +61,49 @@
       display: none;
     }
 
-    .logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      overflow: hidden;
+    .logo-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: #f5f5f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 4px 12px rgba(0,0,0,.22);
       flex-shrink: 0;
-      background: #111;
     }
 
-    .logo svg {
+    .logo-badge img {
       width: 100%;
       height: 100%;
+      object-fit: contain;
       display: block;
+    }
+
+    .brand-text {
+      min-width: 0;
+      line-height: 1.1;
     }
 
     .brand-text h1 {
       margin: 0;
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       color: var(--primary);
-      line-height: 1.1;
       letter-spacing: 0.02em;
+      font-weight: 800;
+    }
+
+    .brand-text p {
+      margin: 4px 0 0;
+      font-size: 0.74rem;
+      color: var(--text);
+      opacity: .86;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .appbar {
@@ -96,17 +118,28 @@
       display: flex;
     }
 
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
     .btn-head {
       appearance: none;
       border: 1px solid var(--border);
       background: var(--surface-2);
       color: var(--text);
       padding: 8px 12px;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       font: inherit;
-      font-weight: 600;
+      font-weight: 700;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
 
     .btn-head:hover {
@@ -119,13 +152,16 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       color: var(--primary);
-      font-weight: 700;
+      font-weight: 800;
+      font-size: 0.98rem;
     }
 
+    #installBtn,
     #openExternalBtn {
       display: none;
     }
 
+    #installBtn.active,
     #openExternalBtn.active {
       display: inline-flex;
     }
@@ -143,33 +179,34 @@
       position: absolute;
       inset: 0;
       overflow-y: auto;
-      padding: 16px;
+      padding: 18px 16px 20px;
     }
 
     .grid {
       max-width: 960px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
       gap: 14px;
-      padding-top: 4px;
     }
 
     .card {
       appearance: none;
       width: 100%;
-      text-align: left;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text);
-      border-radius: var(--radius);
-      padding: 16px;
+      border-radius: 18px;
+      padding: 18px 14px 16px;
       cursor: pointer;
       transition: transform .15s ease, border-color .2s ease, background .2s ease;
-      min-height: 132px;
+      min-height: 168px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 14px;
     }
 
     .card:hover {
@@ -178,16 +215,55 @@
       background: var(--surface-2);
     }
 
-    .card-icon {
-      font-size: 2rem;
-      line-height: 1;
-      margin-bottom: 14px;
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--text);
     }
 
-    .card-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
+    .icon-shell {
+      width: 74px;
+      height: 74px;
+      border-radius: 19px;
+      background: linear-gradient(180deg, #3a3a3a 0%, #232323 48%, #151515 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        0 10px 18px rgba(0,0,0,.28);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .icon-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,0) 45%);
+      pointer-events: none;
+    }
+
+    .icon-shell.small {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.10),
+        0 3px 8px rgba(0,0,0,.22);
+    }
+
+    .icon-shell svg {
+      width: 44px;
+      height: 44px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .icon-shell.small svg {
+      width: 18px;
+      height: 18px;
     }
 
     #frameContainer {
@@ -230,6 +306,7 @@
       flex-direction: column;
       gap: 14px;
       background: rgba(17,17,17,.92);
+      backdrop-filter: blur(2px);
     }
 
     #loader.active {
@@ -262,7 +339,7 @@
       height: var(--tabbar-h);
       display: grid;
       grid-auto-flow: column;
-      grid-auto-columns: 1fr;
+      grid-auto-columns: minmax(72px, 1fr);
       background: var(--surface);
       border-top: 2px solid var(--primary);
       z-index: 300;
@@ -276,15 +353,15 @@
       color: var(--muted);
       cursor: pointer;
       font: inherit;
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 6px 4px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 7px 4px 6px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-      min-width: 72px;
+      gap: 5px;
+      min-width: 74px;
       position: relative;
     }
 
@@ -307,11 +384,6 @@
       border-radius: 0 0 4px 4px;
     }
 
-    .tab-icon {
-      font-size: 1.25rem;
-      line-height: 1;
-    }
-
     @supports (padding-bottom: env(safe-area-inset-bottom)) {
       #tabbar {
         height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
@@ -327,16 +399,12 @@
 
   <header class="topbar">
     <div class="brand" id="brandArea">
-      <div class="logo" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <rect width="512" height="512" rx="80" fill="#111111"/>
-          <g transform="translate(256,256) scale(0.72) translate(-318.9,-248)">
-            <path fill="#ffed00" d="M531.5,177.12H148.73l43.08-28.73c6.57-4.38,14.29-6.72,22.18-6.72h285.8s-140.7-93.84-140.7-93.84c-.7-.48-1.44-.95-2.15-1.42-21.73-14.64-54.36-14.64-76.09,0-.72.48-1.44.94-2.15,1.42L66.6,189.29h0c-4.68,3.2-8.98,6.93-12.8,11.12-41.01,45.63-8.95,118.29,52.5,118.53h382.77l-43.08,28.73c-6.57,4.38-14.29,6.72-22.19,6.72H138.01s140.71,93.84,140.71,93.84c.7.49,1.44.95,2.15,1.43,21.73,14.64,54.36,14.64,76.09,0,.72-.48,1.44-.94,2.14-1.42l212.1-141.45h0c4.69-3.21,9.01-6.96,12.84-11.16,11.73-12.89,18.35-30.15,18.33-47.58,0-39.16-31.73-70.9Z"/>
-          </g>
-        </svg>
+      <div class="logo-badge" aria-hidden="true">
+        <img src="./assets/logo-htb.svg" alt="HTB Logo">
       </div>
       <div class="brand-text">
-        <h1>HTB Anwendungen</h1>
+        <h1>HTB Field Tools</h1>
+        <p>HTB Baugesellschaft m.b.H.</p>
       </div>
     </div>
 
@@ -345,7 +413,10 @@
       <div id="activeAppName"></div>
     </div>
 
-    <button class="btn-head" id="openExternalBtn" onclick="openCurrentExternally()">↗ Neu öffnen</button>
+    <div class="top-actions">
+      <button class="btn-head" id="installBtn" type="button">⬇ Installieren</button>
+      <button class="btn-head" id="openExternalBtn" type="button" onclick="openCurrentExternally()">↗ Neu öffnen</button>
+    </div>
   </header>
 
   <main class="main-area">
@@ -370,6 +441,9 @@
       currentAppId: null
     };
 
+    let deferredPrompt = null;
+    let canInstall = false;
+
     const dashboard = document.getElementById("dashboard");
     const appGrid = document.getElementById("appGrid");
     const tabbar = document.getElementById("tabbar");
@@ -381,6 +455,7 @@
     const brandArea = document.getElementById("brandArea");
     const appBar = document.getElementById("appBar");
     const activeAppName = document.getElementById("activeAppName");
+    const installBtn = document.getElementById("installBtn");
     const openExternalBtn = document.getElementById("openExternalBtn");
 
     function getAppById(id) {
@@ -396,13 +471,90 @@
       loader.classList.remove("active");
     }
 
+    function updateTopButtons() {
+      openExternalBtn.classList.toggle("active", !!state.currentAppId);
+      installBtn.classList.toggle("active", canInstall && !state.currentAppId);
+    }
+
+    function getHomeIconMarkup(size = "small") {
+      return `
+        <div class="icon-shell ${size === "small" ? "small" : ""}" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 30L32 14L52 30" stroke="#FFED00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18 28V48H46V28" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M28 48V36H36V48" stroke="#FFED00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      `;
+    }
+
+    function getAppIconSVG(id) {
+      switch (id) {
+        case "schwingungsmesser":
+          return `
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 34C14 34 14 18 20 18C26 18 26 46 32 46C38 46 38 18 44 18C50 18 50 34 56 34"
+                    stroke="#FFED00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="32" cy="32" r="3.5" fill="#FFFFFF"/>
+            </svg>
+          `;
+        case "rammpfahl":
+          return `
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="27" y="18" width="10" height="27" rx="5" fill="#FFED00"/>
+              <rect x="16" y="10" width="32" height="8" rx="4" fill="#FFFFFF"/>
+              <path d="M18 50H46" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+              <path d="M32 18V10" stroke="#FFED00" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          `;
+        case "pumpversuch":
+          return `
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 11C32 11 44 23 44 33C44 39.627 38.627 45 32 45C25.373 45 20 39.627 20 33C20 23 32 11 32 11Z"
+                    fill="#FFED00"/>
+              <path d="M18 50H46" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+              <path d="M28 23C26.3 25.6 25 28.6 25 31.5" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
+            </svg>
+          `;
+        case "bohrprotokoll":
+          return `
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="19" y="14" width="26" height="36" rx="5" stroke="#FFFFFF" stroke-width="4"/>
+              <rect x="25" y="10" width="14" height="8" rx="3" fill="#FFED00"/>
+              <path d="M25 28H39M25 36H39M25 44H35" stroke="#FFED00" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          `;
+        case "bohrkernaufnahme":
+          return `
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="24" y="10" width="16" height="44" rx="8" stroke="#FFFFFF" stroke-width="4"/>
+              <path d="M24 18H40M24 28H40M24 38H40M24 48H40" stroke="#FFED00" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="32" cy="14" r="3" fill="#FFED00"/>
+            </svg>
+          `;
+        default:
+          return `
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="16" y="16" width="32" height="32" rx="8" stroke="#FFFFFF" stroke-width="4"/>
+              <path d="M24 32H40" stroke="#FFED00" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          `;
+      }
+    }
+
+    function getAppIconMarkup(id, size = "large") {
+      return `
+        <div class="icon-shell ${size === "small" ? "small" : ""}" aria-hidden="true">
+          ${getAppIconSVG(id)}
+        </div>
+      `;
+    }
+
     function renderDashboard() {
       appGrid.innerHTML = (window.APPS || []).map(app => `
-        <button class="card" onclick="openApp('${app.id}')">
-          <div>
-            <div class="card-icon">${app.icon || "🧩"}</div>
-            <div class="card-title">${app.name}</div>
-          </div>
+        <button class="card" onclick="openApp('${app.id}')" aria-label="${app.name}">
+          ${getAppIconMarkup(app.id, "large")}
+          <div class="card-title">${app.name}</div>
         </button>
       `).join("");
     }
@@ -410,14 +562,14 @@
     function renderTabs() {
       const homeTab = `
         <button class="tab active" data-tab="home" onclick="goHome()">
-          <span class="tab-icon">🏠</span>
+          ${getHomeIconMarkup("small")}
           <span>Home</span>
         </button>
       `;
 
       const appTabs = (window.APPS || []).map(app => `
         <button class="tab" data-tab="${app.id}" onclick="openApp('${app.id}')">
-          <span class="tab-icon">${app.icon || "🧩"}</span>
+          ${getAppIconMarkup(app.id, "small")}
           <span>${app.shortName || app.name}</span>
         </button>
       `).join("");
@@ -443,6 +595,7 @@
       frame.allow =
         "accelerometer; gyroscope; magnetometer; clipboard-write; camera; microphone; geolocation; fullscreen; autoplay; serial; usb; hid; gamepad";
       frame.loading = "eager";
+      frame.referrerPolicy = "strict-origin-when-cross-origin";
 
       frame.addEventListener("load", () => {
         hideLoader();
@@ -461,21 +614,21 @@
     function setAppUi(app) {
       brandArea.classList.add("hidden");
       appBar.classList.add("active");
-      openExternalBtn.classList.add("active");
       activeAppName.textContent = app.name;
       dashboard.style.display = "none";
       frameContainer.classList.add("active");
       setActiveTab(app.id);
+      updateTopButtons();
     }
 
     function setHomeUi() {
       brandArea.classList.remove("hidden");
       appBar.classList.remove("active");
-      openExternalBtn.classList.remove("active");
       activeAppName.textContent = "";
       dashboard.style.display = "block";
       frameContainer.classList.remove("active");
       setActiveTab("home");
+      updateTopButtons();
     }
 
     function openApp(id, updateHash = true) {
@@ -536,10 +689,35 @@
       goHome(false);
     }
 
+    installBtn.addEventListener("click", async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      try {
+        await deferredPrompt.userChoice;
+      } catch (e) {}
+      deferredPrompt = null;
+      canInstall = false;
+      updateTopButtons();
+    });
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      canInstall = true;
+      updateTopButtons();
+    });
+
+    window.addEventListener("appinstalled", () => {
+      deferredPrompt = null;
+      canInstall = false;
+      updateTopButtons();
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
       renderDashboard();
       renderTabs();
       applyRouteFromHash();
+      updateTopButtons();
     });
 
     window.addEventListener("hashchange", applyRouteFromHash);
@@ -549,6 +727,12 @@
         goHome();
       }
     });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(console.error);
+      });
+    }
   </script>
 </body>
 </html>
