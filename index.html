@@ -20,20 +20,22 @@
     }
 
     :root {
-      --bg: #0d0f12;
-      --surface: #252a31;
-      --surface-2: #2f353d;
+      --bg: #0b0e14;
+      --surface: rgba(33, 39, 49, 0.88);
+      --surface-2: rgba(45, 53, 65, 0.92);
+      --surface-3: rgba(68, 78, 94, 0.38);
       --primary: #ffed00;
       --primary-dark: #ccbe00;
       --text: #ffffff;
       --muted: #b7bcc4;
-      --border: #3a4048;
-      --radius: 14px;
+      --border: rgba(255,255,255,0.08);
+      --cyan: rgba(113, 207, 255, 0.65);
+      --radius: 18px;
 
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
 
-      --header-base-h: 78px;
+      --header-base-h: 82px;
       --footer-base-h: 88px;
 
       --header-total-h: calc(var(--header-base-h) + var(--safe-top));
@@ -48,14 +50,57 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       overflow: hidden;
       background:
-        radial-gradient(circle at 50% -10%, rgba(255,255,255,0.06), rgba(255,255,255,0) 30%),
-        linear-gradient(180deg, #15181d 0%, #0d0f12 34%, #0a0b0d 100%);
+        radial-gradient(circle at 18% 24%, rgba(110, 190, 255, 0.10), rgba(110, 190, 255, 0) 22%),
+        radial-gradient(circle at 82% 18%, rgba(110, 190, 255, 0.08), rgba(110, 190, 255, 0) 24%),
+        radial-gradient(circle at 74% 82%, rgba(110, 190, 255, 0.06), rgba(110, 190, 255, 0) 20%),
+        linear-gradient(180deg, #1a1f29 0%, #0e1219 40%, #090b10 100%);
     }
 
     body {
+      position: relative;
       background:
-        radial-gradient(circle at 50% -10%, rgba(255,255,255,0.06), rgba(255,255,255,0) 30%),
-        linear-gradient(180deg, #15181d 0%, #0d0f12 34%, #0a0b0d 100%);
+        radial-gradient(circle at 18% 24%, rgba(110, 190, 255, 0.10), rgba(110, 190, 255, 0) 22%),
+        radial-gradient(circle at 82% 18%, rgba(110, 190, 255, 0.08), rgba(110, 190, 255, 0) 24%),
+        radial-gradient(circle at 74% 82%, rgba(110, 190, 255, 0.06), rgba(110, 190, 255, 0) 20%),
+        linear-gradient(180deg, #1a1f29 0%, #0e1219 40%, #090b10 100%);
+    }
+
+    /* Technischer Hintergrund */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent 0 124px,
+          rgba(113, 207, 255, 0.045) 124px 125px
+        ),
+        repeating-linear-gradient(
+          180deg,
+          transparent 0 124px,
+          rgba(113, 207, 255, 0.035) 124px 125px
+        );
+      opacity: 0.35;
+    }
+
+    body::after {
+      background:
+        radial-gradient(circle at 78% 14%, rgba(160, 225, 255, 0.55) 0 1px, transparent 2px),
+        radial-gradient(circle at 82% 20%, rgba(160, 225, 255, 0.45) 0 1px, transparent 2px),
+        radial-gradient(circle at 73% 28%, rgba(160, 225, 255, 0.40) 0 1px, transparent 2px),
+        radial-gradient(circle at 84% 36%, rgba(160, 225, 255, 0.50) 0 1px, transparent 2px),
+        linear-gradient(100deg, transparent 0 74%, rgba(113, 207, 255, 0.13) 74%, rgba(113, 207, 255, 0.13) 74.2%, transparent 74.2%),
+        linear-gradient(86deg, transparent 0 71%, rgba(113, 207, 255, 0.08) 71%, rgba(113, 207, 255, 0.08) 71.15%, transparent 71.15%),
+        linear-gradient(92deg, transparent 0 81%, rgba(113, 207, 255, 0.09) 81%, rgba(113, 207, 255, 0.09) 81.15%, transparent 81.15%),
+        linear-gradient(0deg, transparent 0 72%, rgba(113, 207, 255, 0.06) 72%, rgba(113, 207, 255, 0.06) 72.15%, transparent 72.15%);
+      opacity: 0.55;
     }
 
     /* HEADER */
@@ -69,10 +114,12 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      background: linear-gradient(180deg, #3a4048 0%, #2a2f36 100%);
+      background: linear-gradient(180deg, rgba(56,64,72,0.92) 0%, rgba(42,47,54,0.90) 100%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-bottom: 2px solid var(--primary);
       z-index: 300;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.28);
     }
 
     .brand {
@@ -198,9 +245,9 @@
       left: 0;
       right: 0;
       bottom: var(--footer-total-h);
+      z-index: 1;
       background:
-        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.03), rgba(255,255,255,0) 26%),
-        linear-gradient(180deg, #13161a 0%, #0b0c0f 100%);
+        linear-gradient(180deg, rgba(19,22,26,0.72) 0%, rgba(11,12,15,0.86) 100%);
     }
 
     /* DASHBOARD */
@@ -208,7 +255,7 @@
       position: absolute;
       inset: 0;
       overflow-y: auto;
-      padding: 16px;
+      padding: 18px 16px 24px;
     }
 
     .grid {
@@ -216,7 +263,7 @@
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+      gap: 18px;
     }
 
     @media (min-width: 980px) {
@@ -229,31 +276,52 @@
       appearance: none;
       width: 100%;
       border: 1px solid rgba(255,255,255,0.08);
-      background: linear-gradient(180deg, #2d3239 0%, #23272d 100%);
+      background: linear-gradient(180deg, rgba(45,50,57,0.88) 0%, rgba(35,39,45,0.86) 100%);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       color: var(--text);
       border-radius: 22px;
-      padding: 20px 16px 18px;
+      padding: 18px 16px;
       cursor: pointer;
       transition: transform .18s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
-      min-height: 178px;
+      min-height: 160px;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      text-align: center;
+      justify-content: space-between;
       gap: 14px;
+      text-align: left;
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.04),
         0 10px 24px rgba(0,0,0,0.26);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(113,207,255,0.10), rgba(113,207,255,0) 34%),
+        radial-gradient(circle at 12% 20%, rgba(255,255,255,0.08), rgba(255,255,255,0) 30%);
+      pointer-events: none;
+      opacity: 0.7;
     }
 
     .card:hover {
       transform: translateY(-2px);
       border-color: rgba(255,237,0,0.75);
-      background: linear-gradient(180deg, #333840 0%, #262a31 100%);
+      background: linear-gradient(180deg, rgba(51,56,64,0.92) 0%, rgba(38,42,49,0.90) 100%);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.05),
         0 12px 26px rgba(0,0,0,0.30);
+    }
+
+    .card-copy {
+      flex: 1;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
     }
 
     .card-title {
@@ -262,13 +330,33 @@
       line-height: 1.22;
       color: var(--text);
       text-wrap: balance;
+      margin-bottom: 12px;
     }
+
+    .card-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: 120px;
+    }
+
+    .card-bars span {
+      display: block;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(113,207,255,0.85), rgba(113,207,255,0.18));
+      box-shadow: 0 0 10px rgba(113,207,255,0.10);
+    }
+
+    .card-bars span:nth-child(1) { width: 96px; }
+    .card-bars span:nth-child(2) { width: 74px; opacity: 0.82; }
+    .card-bars span:nth-child(3) { width: 52px; opacity: 0.68; }
 
     /* ICONS */
     .icon-shell {
-      width: 86px;
-      height: 86px;
-      border-radius: 24px;
+      width: 70px;
+      height: 70px;
+      border-radius: 20px;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.03) 18%, rgba(255,255,255,0) 42%),
         linear-gradient(180deg, #5a5e65 0%, #2f3339 50%, #1c1f23 100%);
@@ -282,6 +370,7 @@
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
+      z-index: 1;
     }
 
     .icon-shell::before {
@@ -296,14 +385,14 @@
       content: "";
       position: absolute;
       inset: 1px;
-      border-radius: 23px;
+      border-radius: 19px;
       border: 1px solid rgba(255,255,255,0.04);
       pointer-events: none;
     }
 
     .icon-shell svg {
-      width: 50px;
-      height: 50px;
+      width: 36px;
+      height: 36px;
       position: relative;
       z-index: 1;
       filter: drop-shadow(0 2px 2px rgba(0,0,0,.18));
@@ -362,7 +451,7 @@
       width: 42px;
       height: 42px;
       border-radius: 50%;
-      border: 4px solid var(--border);
+      border: 4px solid rgba(255,255,255,0.14);
       border-top-color: var(--primary);
       animation: spin .8s linear infinite;
     }
@@ -382,7 +471,9 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(180deg, #242930 0%, #1c2026 100%);
+      background: linear-gradient(180deg, rgba(36,41,48,0.92) 0%, rgba(28,32,38,0.92) 100%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       padding: 12px 16px calc(12px + var(--safe-bottom));
       border-top: 2px solid var(--primary);
       z-index: 300;
@@ -402,7 +493,7 @@
     .btn {
       background: linear-gradient(180deg, #3b424b 0%, #2d333b 100%);
       color: var(--text);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,0.08);
       padding: 12px 16px;
       border-radius: var(--radius);
       cursor: pointer;
@@ -440,6 +531,21 @@
       text-align: center;
       line-height: 1.35;
       max-width: 520px;
+    }
+
+    @media (max-width: 520px) {
+      .card {
+        min-height: 150px;
+        padding: 16px 14px;
+      }
+
+      .card-title {
+        font-size: 0.92rem;
+      }
+
+      .card-bars span:nth-child(1) { width: 82px; }
+      .card-bars span:nth-child(2) { width: 64px; }
+      .card-bars span:nth-child(3) { width: 44px; }
     }
   </style>
 </head>
@@ -481,7 +587,7 @@
   </main>
 
   <footer class="install-bar" id="installBar">
-    <button class="btn btn-primary" id="installBtnFooter" type="button">⬇ Installieren</button>
+    <button class="btn btn-primary" id="installBtnFooter" type="button">Installieren</button>
     <div class="install-note" id="installNote"></div>
   </footer>
 
@@ -546,21 +652,21 @@
 
       if (isIOS()) {
         installBtnFooter.style.display = "inline-flex";
-        installBtnFooter.textContent = "⬇ Installieren";
+        installBtnFooter.textContent = "Installieren";
         installNote.textContent = "iPhone / iPad: Teilen → Zum Home-Bildschirm";
         return;
       }
 
       if (deferredPrompt) {
         installBtnFooter.style.display = "inline-flex";
-        installBtnFooter.textContent = "⬇ Installieren";
+        installBtnFooter.textContent = "Installieren";
         installNote.textContent = "App kann direkt installiert werden.";
         return;
       }
 
       if (isAndroid()) {
         installBtnFooter.style.display = "inline-flex";
-        installBtnFooter.textContent = "⬇ Installieren";
+        installBtnFooter.textContent = "Installieren";
         installNote.textContent = "Falls kein Dialog erscheint: Chrome-Menü ⋮ → App installieren";
         return;
       }
@@ -654,8 +760,15 @@
     function renderDashboard() {
       appGrid.innerHTML = (window.APPS || []).map(app => `
         <button class="card" onclick="openApp('${app.id}')" aria-label="${app.name}">
+          <div class="card-copy">
+            <div class="card-title">${app.name}</div>
+            <div class="card-bars" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
           ${getAppIconMarkup(app.id)}
-          <div class="card-title">${app.name}</div>
         </button>
       `).join("");
     }
