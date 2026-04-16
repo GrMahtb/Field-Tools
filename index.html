@@ -449,7 +449,7 @@
   </main>
 
   <footer class="install-bar" id="installBar">
-    <button class="btn btn-primary" id="installBtnFooter" type="button">⬇ Installieren</button>
+    <button class="btn btn-primary" id="installBtnFooter" type="button">Installieren</button>
     <div class="install-note" id="installNote"></div>
   </footer>
 
@@ -514,21 +514,21 @@
 
       if (isIOS()) {
         installBtnFooter.style.display = "inline-flex";
-        installBtnFooter.textContent = "⬇ Installieren";
+        installBtnFooter.textContent = "Installieren";
         installNote.textContent = "iPhone / iPad: Teilen → Zum Home-Bildschirm";
         return;
       }
 
       if (deferredPrompt) {
         installBtnFooter.style.display = "inline-flex";
-        installBtnFooter.textContent = "⬇ Installieren";
+        installBtnFooter.textContent = "Installieren";
         installNote.textContent = "App kann direkt installiert werden.";
         return;
       }
 
       if (isAndroid()) {
         installBtnFooter.style.display = "inline-flex";
-        installBtnFooter.textContent = "⬇ Installieren";
+        installBtnFooter.textContent = "Installieren";
         installNote.textContent = "Falls kein Dialog erscheint: Chrome-Menü ⋮ → App installieren";
         return;
       }
