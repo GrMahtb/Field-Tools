@@ -1,4 +1,4 @@
-const CACHE_NAME = "htb-field-tools-v18";
+const CACHE_NAME = "htb-field-tools-v19";
 
 const ASSETS = [
   "./",
@@ -30,7 +30,6 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
-
   event.respondWith(
     caches.match(event.request).then((cached) => cached || fetch(event.request))
   );
