@@ -266,9 +266,9 @@
 
     /* ICONS */
     .icon-shell {
-      width: 72px;
-      height: 72px;
-      border-radius: 20px;
+      width: 86px;
+      height: 86px;
+      border-radius: 24px;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.03) 18%, rgba(255,255,255,0) 42%),
         linear-gradient(180deg, #5a5e65 0%, #2f3339 50%, #1c1f23 100%);
@@ -296,14 +296,14 @@
       content: "";
       position: absolute;
       inset: 1px;
-      border-radius: 19px;
+      border-radius: 23px;
       border: 1px solid rgba(255,255,255,0.04);
       pointer-events: none;
     }
 
     .icon-shell svg {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       position: relative;
       z-index: 1;
       filter: drop-shadow(0 2px 2px rgba(0,0,0,.18));
@@ -481,7 +481,7 @@
   </main>
 
   <footer class="install-bar" id="installBar">
-    <button class="btn btn-primary" id="installBtnFooter" type="button">Installieren</button>
+    <button class="btn btn-primary" id="installBtnFooter" type="button">⬇ Installieren</button>
     <div class="install-note" id="installNote"></div>
   </footer>
 
@@ -546,21 +546,21 @@
 
       if (isIOS()) {
         installBtnFooter.style.display = "inline-flex";
-        installBtnFooter.textContent = "Installieren";
+        installBtnFooter.textContent = "⬇ Installieren";
         installNote.textContent = "iPhone / iPad: Teilen → Zum Home-Bildschirm";
         return;
       }
 
       if (deferredPrompt) {
         installBtnFooter.style.display = "inline-flex";
-        installBtnFooter.textContent = "Installieren";
+        installBtnFooter.textContent = "⬇ Installieren";
         installNote.textContent = "App kann direkt installiert werden.";
         return;
       }
 
       if (isAndroid()) {
         installBtnFooter.style.display = "inline-flex";
-        installBtnFooter.textContent = "Installieren";
+        installBtnFooter.textContent = "⬇ Installieren";
         installNote.textContent = "Falls kein Dialog erscheint: Chrome-Menü ⋮ → App installieren";
         return;
       }
