@@ -1,11 +1,13 @@
-const CACHE_NAME = "htb-field-tools-v11";
+const CACHE_NAME = "htb-field-tools-v12";
 
 const ASSETS = [
   "./",
   "./index.html",
   "./apps.js",
   "./manifest.webmanifest",
-  "./assets/icon.svg"
+  "./assets/icon.svg",
+  "./assets/icons/launchericon-192×192.png",
+  "./assets/icons/launchericon-512×512.png"
 ];
 
 self.addEventListener("install", (event) => {
