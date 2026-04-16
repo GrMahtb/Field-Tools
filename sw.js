@@ -1,4 +1,4 @@
-const CACHE_NAME = "htb-field-tools-v17";
+const CACHE_NAME = "htb-field-tools-v18";
 
 const ASSETS = [
   "./",
