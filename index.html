@@ -6,7 +6,7 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0, viewport-fit=cover"
   />
-  <title>HTB Field Tools</title>
+  <title>Field Tools</title>
 
   <meta name="theme-color" content="#06101a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,7 +56,7 @@
       background: var(--bg);
     }
 
-    /* Hintergrund-SVG wirklich hinten */
+    /* Hintergrund-SVG */
     .bg-scene {
       position: fixed;
       inset: 0;
@@ -294,12 +294,12 @@
       border-radius: 20px;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.03) 18%, rgba(255,255,255,0) 42%),
-        linear-gradient(180deg, rgba(103,108,116,0.70) 0%, rgba(47,51,57,0.82) 50%, rgba(24,27,31,0.92) 100%);
-      border: 1px solid rgba(255,255,255,.09);
+        linear-gradient(180deg, rgba(46,65,82,0.78) 0%, rgba(18,30,44,0.88) 50%, rgba(10,18,28,0.96) 100%);
+      border: 1px solid rgba(151,251,255,.16);
       box-shadow:
-        inset 0 2px 0 rgba(255,255,255,.12),
+        inset 0 2px 0 rgba(255,255,255,.10),
         inset 0 -1px 0 rgba(0,0,0,.35),
-        0 0 16px rgba(151,251,255,0.10),
+        0 0 16px rgba(151,251,255,0.12),
         0 14px 24px rgba(0,0,0,.32);
       display: grid;
       place-items: center;
@@ -312,7 +312,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 14%, rgba(255,255,255,.15), rgba(255,255,255,0) 46%);
+      background: radial-gradient(circle at 50% 14%, rgba(255,255,255,.12), rgba(255,255,255,0) 46%);
       pointer-events: none;
     }
 
@@ -326,11 +326,11 @@
     }
 
     .icon-shell svg {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       position: relative;
       z-index: 1;
-      filter: drop-shadow(0 2px 2px rgba(0,0,0,.18));
+      filter: drop-shadow(0 0 6px rgba(151,251,255,.18));
     }
 
     /* FRAMES */
@@ -553,7 +553,7 @@
         <img src="./assets/icon.svg" alt="HTB Logo" width="44" height="44">
       </div>
       <div class="brand-text">
-        <h1>HTB Field Tools</h1>
+        <h1>Field Tools</h1>
         <p>HTB Baugesellschaft m.b.H.</p>
       </div>
     </div>
@@ -676,50 +676,51 @@
         case "schwingungsmesser":
           return `
             <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 34C14 34 14 18 20 18C26 18 26 46 32 46C38 46 38 18 44 18C50 18 50 34 56 34"
-              stroke="#FFED00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="32" cy="32" r="3.5" fill="#FFFFFF"/>
+              <path d="M8 34C13 34 13.5 20 19 20C24 20 24.5 44 30 44C35 44 35.5 14 41 14C46.5 14 47 34 52 34C54 34 55 28 56 28"
+                    stroke="#97FBFF" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="31" cy="30" r="3.4" fill="#D7FDFF"/>
+              <circle cx="31" cy="30" r="1.4" fill="#7AEFFF"/>
             </svg>
           `;
         case "rammpfahl":
           return `
             <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="27" y="18" width="10" height="27" rx="5" fill="#FFED00"/>
-              <rect x="16" y="10" width="32" height="8" rx="4" fill="#FFFFFF"/>
-              <path d="M18 50H46" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
-              <path d="M32 18V10" stroke="#FFED00" stroke-width="4" stroke-linecap="round"/>
+              <rect x="18" y="14" width="28" height="8" rx="3" stroke="#D7FDFF" stroke-width="3.2"/>
+              <rect x="28" y="22" width="8" height="23" rx="3" stroke="#97FBFF" stroke-width="3.2"/>
+              <path d="M18 50H46" stroke="#D7FDFF" stroke-width="3.2" stroke-linecap="round"/>
+              <path d="M32 12V18" stroke="#7AEFFF" stroke-width="3.2" stroke-linecap="round"/>
             </svg>
           `;
         case "pumpversuch":
           return `
             <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M32 11C32 11 44 23 44 33C44 39.627 38.627 45 32 45C25.373 45 20 39.627 20 33C20 23 32 11 32 11Z"
-              fill="#FFED00"/>
-              <path d="M18 50H46" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
-              <path d="M28 23C26.3 25.6 25 28.6 25 31.5" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M32 12C32 12 44 24 44 34C44 40.627 38.627 46 32 46C25.373 46 20 40.627 20 34C20 24 32 12 32 12Z"
+                    stroke="#D7FDFF" stroke-width="3.2" fill="rgba(122,239,255,0.08)"/>
+              <path d="M26.5 27.5C25.1 29.4 24.5 31.1 24.5 33" stroke="#97FBFF" stroke-width="3" stroke-linecap="round"/>
+              <path d="M18 50H46" stroke="#7AEFFF" stroke-width="3.2" stroke-linecap="round"/>
             </svg>
           `;
         case "bohrprotokoll":
           return `
             <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="19" y="14" width="26" height="36" rx="5" stroke="#FFFFFF" stroke-width="4"/>
-              <rect x="25" y="10" width="14" height="8" rx="3" fill="#FFED00"/>
-              <path d="M25 28H39M25 36H39M25 44H35" stroke="#FFED00" stroke-width="4" stroke-linecap="round"/>
+              <rect x="20" y="14" width="24" height="36" rx="5" stroke="#D7FDFF" stroke-width="3.2"/>
+              <rect x="26" y="10.5" width="12" height="8" rx="3" stroke="#97FBFF" stroke-width="3"/>
+              <path d="M25 28H39M25 36H39M25 44H35" stroke="#7AEFFF" stroke-width="3.2" stroke-linecap="round"/>
             </svg>
           `;
         case "bohrkernaufnahme":
           return `
             <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="24" y="10" width="16" height="44" rx="8" stroke="#FFFFFF" stroke-width="4"/>
-              <path d="M24 18H40M24 28H40M24 38H40M24 48H40" stroke="#FFED00" stroke-width="4" stroke-linecap="round"/>
-              <circle cx="32" cy="14" r="3" fill="#FFED00"/>
+              <rect x="24" y="10" width="16" height="44" rx="8" stroke="#D7FDFF" stroke-width="3.2"/>
+              <path d="M24 18H40M24 28H40M24 38H40M24 48H40" stroke="#7AEFFF" stroke-width="3.2" stroke-linecap="round"/>
+              <circle cx="32" cy="14" r="2.2" fill="#97FBFF"/>
             </svg>
           `;
         default:
           return `
             <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="16" y="16" width="32" height="32" rx="8" stroke="#FFFFFF" stroke-width="4"/>
-              <path d="M24 32H40" stroke="#FFED00" stroke-width="4" stroke-linecap="round"/>
+              <rect x="16" y="16" width="32" height="32" rx="8" stroke="#D7FDFF" stroke-width="3.2"/>
+              <path d="M24 32H40" stroke="#97FBFF" stroke-width="3.2" stroke-linecap="round"/>
             </svg>
           `;
       }
@@ -743,11 +744,11 @@
     }
 
     function getOrCreateFrame(app) {
-      let frame = document.getElementById(`frame-${app.id}`);
+      let frame = document.getElementById(\`frame-\${app.id}\`);
       if (frame) return { frame, created: false };
 
       frame = document.createElement("iframe");
-      frame.id = `frame-${app.id}`;
+      frame.id = \`frame-\${app.id}\`;
       frame.className = "app-frame";
       frame.src = app.url;
       frame.title = app.name;
@@ -812,7 +813,7 @@
       }
 
       if (updateHash) {
-        location.hash = `app=${encodeURIComponent(id)}`;
+        location.hash = \`app=\${encodeURIComponent(id)}\`;
       }
     }
 
@@ -848,7 +849,7 @@
 
     installBtnFooter.addEventListener("click", async () => {
       if (isIOS()) {
-        alert('iPhone / iPad:\n\n1. Auf "Teilen"\n2. "Zum Home-Bildschirm"\n3. "Hinzufügen"');
+        alert('iPhone / iPad:\\n\\n1. Auf "Teilen"\\n2. "Zum Home-Bildschirm"\\n3. "Hinzufügen"');
         return;
       }
 
@@ -863,7 +864,7 @@
       }
 
       if (isAndroid()) {
-        alert('Android / Chrome:\n\nWenn kein direkter Dialog erscheint:\nMenü ⋮ → "App installieren"');
+        alert('Android / Chrome:\\n\\nWenn kein direkter Dialog erscheint:\\nMenü ⋮ → "App installieren"');
         return;
       }
 
