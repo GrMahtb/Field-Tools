@@ -28,5 +28,11 @@ window.APPS = [
     name: "Bohrkernaufnahme",
     url: "https://grmahtb.github.io/Bohrkernaufnahme/",
     mode: "iframe"
+  },
+   {
+    id: "EW-Protokoll",
+    name: "EW-Protokoll",
+    url: "https://grmahtb.github.io/EW-Protokoll/",
+    mode: "iframe"
   }
 ];
